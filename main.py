@@ -509,7 +509,7 @@ def main() -> None:
     # Plot average
     fft_mean_plot = fft_mean_decimated.copy()
     fft_mean_decimated[fft_mean_decimated < PLOT_MIN_POWER_DBFS] = PLOT_MIN_POWER_DBFS
-    axs.plot(fft_freqs_decimated, fft_mean_decimated, label="Average")
+    axs.plot(fft_freqs_decimated, fft_mean_plot, label="Average")
 
     # Show plot
     fig.legend(loc="upper right", framealpha=0.5)

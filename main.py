@@ -412,7 +412,10 @@ def main() -> None:
         # Cut to minimum size
         extra_size = (len(samples_all[i]) - samples_len_min) // 2
         if extra_size > 0:
-            samples_all[i] = samples_all[i][extra_size:-extra_size]
+            if extra_size * 2 < len(samples_all[i]):
+                samples_all[i] = samples_all[i][extra_size:-(extra_size + 1)]
+            else:
+                samples_all[i] = samples_all[i][extra_size:-extra_size]
 
         # Calculate FFT
         fft = np.fft.rfft(samples_all[i])

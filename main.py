@@ -32,10 +32,10 @@ WAV_FILES_PATHS = [
     "samples/White Noise.wav",
     "samples/Pink Noise.wav",
     "samples/20Hz-20KHz Sweep.wav",
-    "samples/100Hz Sine.wav",
-    "samples/440Hz Sine.wav",
-    "samples/1KHz Sine.wav",
-    "samples/5KHz Sine.wav"
+    #"samples/100Hz Sine.wav",
+    #"samples/440Hz Sine.wav",
+    #"samples/1KHz Sine.wav",
+    #"samples/5KHz Sine.wav"
 ]
 
 #  0  - int8 [b / (2^8 / 2)] (aka Signed 8-bit PCM)
@@ -71,7 +71,7 @@ NORMALIZE_DATA = 2
 MIN_FREQUENCY_HZ = 10
 
 # Minimum FFT amplitude on the plot (in dBFS)
-PLOT_MIN_POWER_DBFS = -100
+PLOT_MIN_POWER_DBFS = -40
 
 # Number of points of each plot (higher values -> higher resolution, but the readability of the plot is lower)
 POINTS_N = 1000
@@ -80,8 +80,8 @@ POINTS_N = 1000
 # 0 - Extract average (mean) as calibration profile
 # 1 to N - Extract calibration profile for specific file (in WAV_FILES_PATHS) referenced to average
 # Set EXTRACT_DATA_REDUCED_POINTS to True to reduce number of points to POINTS_N
-EXTRACT_DATA = -1
-EXTRACT_DATA_PATH = "C:\\Users\\F3rni\\Desktop\\Calibration.txt"
+EXTRACT_DATA = 0
+EXTRACT_DATA_PATH = "Calibration.txt"
 EXTRACT_DATA_DELIMITER = "\t"
 EXTRACT_DATA_REDUCED_POINTS = True
 
@@ -332,6 +332,8 @@ def log_decimation(input_data: np.ndarray, num_points: int, index_start=0, filte
                 reduced_data.append(reduced_sample)
             else:
                 reduced_data.append(input_data[start])
+        else:
+            reduced_data.append(input_data[indices[i]])
 
     return np.asarray(reduced_data, dtype=np.float32)
 

@@ -26,16 +26,16 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 WAV_FILES_PATHS = [
     "samples/White Noise.wav",
     "samples/Pink Noise.wav",
     "samples/20Hz-20KHz Sweep.wav",
-    #"samples/100Hz Sine.wav",
-    #"samples/440Hz Sine.wav",
-    #"samples/1KHz Sine.wav",
-    #"samples/5KHz Sine.wav"
+    "samples/100Hz Sine.wav",
+    "samples/440Hz Sine.wav",
+    "samples/1KHz Sine.wav",
+    "samples/5KHz Sine.wav"
 ]
 
 #  0  - int8 [b / (2^8 / 2)] (aka Signed 8-bit PCM)
@@ -74,7 +74,7 @@ MIN_FREQUENCY_HZ = 10
 PLOT_MIN_POWER_DBFS = -40
 
 # Number of points of each plot (higher values -> higher resolution, but the readability of the plot is lower)
-POINTS_N = 1000
+POINTS_N = 2000
 
 # -1 - Don't extract any data
 # 0 - Extract average (mean) as calibration profile
@@ -401,7 +401,7 @@ def main() -> None:
     fig.tight_layout(pad=3)
 
     # Initialize plot
-    axs.set_title("Spectrum power" + (" (normalized)" if NORMALIZE_DATA > 0 else ""))
+    axs.set_title("Spectrum power" + (" (normalized)" if NORMALIZE_DATA > 0 else "") + ", {} points".format(POINTS_N))
     axs.grid(True, which="both")
     axs.set(xlabel="Frequency (Hz)", ylabel="Amplitude (dBFS)")
     axs.set_xscale("log", base=10)
@@ -462,7 +462,7 @@ def main() -> None:
         ffts_dbfs_decimated.append(fft_dbfs_decimated)
 
         # Plot data
-        fft_dbfs_plot = fft_dbfs_decimated
+        fft_dbfs_plot = fft_dbfs_decimated.copy()
         fft_dbfs_plot[fft_dbfs_plot < PLOT_MIN_POWER_DBFS] = PLOT_MIN_POWER_DBFS
         axs.plot(fft_freqs_decimated, fft_dbfs_plot, label=os.path.basename(WAV_FILES_PATHS[i]), alpha=0.5)
 
@@ -507,6 +507,8 @@ def main() -> None:
                 file.write("\n")
 
     # Plot average
+    fft_mean_plot = fft_mean_decimated.copy()
+    fft_mean_decimated[fft_mean_decimated < PLOT_MIN_POWER_DBFS] = PLOT_MIN_POWER_DBFS
     axs.plot(fft_freqs_decimated, fft_mean_decimated, label="Average")
 
     # Show plot

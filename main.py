@@ -71,7 +71,7 @@ NORMALIZE_DATA = 2
 MIN_FREQUENCY_HZ = 10
 
 # Minimum FFT amplitude on the plot (in dBFS)
-PLOT_MIN_POWER_DBFS = -40
+PLOT_MIN_POWER_DBFS = -120
 
 # Number of points of each plot (higher values -> higher resolution, but the readability of the plot is lower)
 POINTS_N = 2000
